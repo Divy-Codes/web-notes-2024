@@ -1,0 +1,44 @@
+.container {
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+  grid-template-rows: 7vh 93vh;
+  overflow-y: hidden;
+
+  .notesContainer {
+    display: grid;
+    grid-template-columns: minmax(12rem, 0.2fr) 1fr;
+    height: 97vh;
+    overflow-y: hidden;
+
+    .sidebarContainer {
+      overflow-y: auto;
+      background-color: #242424;
+      opacity: 0.75;
+      padding: 0.25rem 0.5rem;
+      padding-bottom: 10rem;
+
+      //Works only on chrome
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      // height: 92vh;
+    }
+
+    .mainContainer {
+      padding: 0.5rem 2rem;
+      // padding: 0.25rem 1rem;
+      // overflow-y: auto;
+      // height: 97vh;
+    }
+  }
+
+  .navBar {
+    //Span the complete first row
+    grid-column: 1/-1;
+    width: 100vw;
+    background-color: #303030;
+    background-color: #333;
+    // opacity: 0.75;
+  }
+}
