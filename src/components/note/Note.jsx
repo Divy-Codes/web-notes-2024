@@ -1,71 +1,108 @@
 import { useEffect, useRef, useState } from 'react';
 import './note.scss';
-import CreateableReactSelect from 'react-select/creatable';
-import { debounce, pressEntertoFocusOn } from '../../utils/helperMethods';
+import { pressEntertoFocusOn } from '../../utils/helperMethods';
+import { actions } from '../contextProvider/NotesProvider';
+import { useNotes } from '../contextProvider/NotesProvider';
+import SelectTags from '../selectTags/SelectTags';
+
 export default function Note() {
+  const [
+    {
+      notes,
+      tags,
+      config: { activeNote },
+    },
+    dispatch,
+  ] = useNotes();
+  const [title, setTitle] = useState(activeNote.title || 'Untitled');
+  const [body, setBody] = useState(activeNote.body || '');
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [noteId, setNoteId] = useState(activeNote.id || null);
   const titleRef = useRef();
   const bodyRef = useRef();
-  //Our Single tag = {label:... , id: ....}
-  //react-select expects a tag to be {label:... , value: ... }
-  const [selectedTags, setSelectedTags] = useState([]);
-  const saveNote = useRef();
 
-  const onSubmit = (f) => f;
+  useEffect(() => {
+    console.log(`noteID:`, noteId);
+  }, [noteId]);
 
+  //We will be rendering the activeNote. So Update contents of current Note(being rendered) when we have an activeNote.
+  useEffect(() => {
+    if (activeNote) {
+      console.log(`activeNote:`, activeNote);
+
+      setTitle(activeNote.title);
+      setBody(activeNote.body);
+      setNoteId(activeNote.id);
+
+      //Update selectedTags from active note as well. Remember Note and activeNote have tagIds instead of tags. So need to convert them
+      setSelectedTags(
+        activeNote.tagIds.map((tagId) => tags.find((tag) => tag.id == tagId))
+      );
+    }
+  }, [activeNote, tags]);
+
+  //tag = {label:'...' , id: '...'}
+  //react-select tag: {label:'...' , value: '...' }
+
+  //Save an already existing Note. Also update the activeNote everytime
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(`handleSubmit called`);
-    onSubmit({
-      title: titleRef.current.value,
-      body: bodyRef.current.value,
-      tags: [],
+    console.log(`savenote called`);
+    const savedNote = {
+      id: noteId,
+      title,
+      body,
+      tagIds: selectedTags.map((tag) => tag.id),
+    };
+    dispatch({
+      type: actions.SAVE_NOTE,
+      payload: savedNote,
+    });
+
+    // Update activeState with same note
+    dispatch({
+      type: actions.SET_ACTIVE_NOTE,
+      payload: savedNote,
     });
   };
 
-  //Save the note by pressing Ctrl + ALt + v
+  //=========================SAVING ITEMS TO LOCAL STORAGE=========================
+
+  //Update localStorage when notes change
   useEffect(() => {
-    const saveForm = (e) => {
-      if (e.ctrlKey && e.altKey && e.key == 'b') {
-        e.stopPropagation();
-        // saveNote.current.dispatchEvent(new CustomEvent('click'));
+    localStorage.setItem('NOTES', JSON.stringify(notes));
+  }, [notes]);
 
-        console.log(`form saved`);
-      }
-    };
+  //When tags update, we want to save them to localStorage as well.
+  useEffect(() => {
+    localStorage.setItem('TAGS', JSON.stringify(tags));
+  }, [tags]);
 
-    const debouncedSaveForm = debounce(saveForm);
+  useEffect(() => {
+    localStorage.setItem('CONFIG', JSON.stringify({ activeNote }));
+  }, [activeNote, title, body]);
 
-    window.addEventListener('keydown', debouncedSaveForm);
-    return () => window.removeEventListener('keydown', debouncedSaveForm);
-  }, []);
-
+  // =============================RETURN========================================
   return (
     <div className='noteContainer'>
       <div className='noteOptions'>
         <div className='tags'>
-          <CreateableReactSelect
-            isMulti
-            value={selectedTags.map((tag) => ({
-              label: tag.label,
-              value: tag.id,
-            }))}
-            onChange={(tags) =>
-              setSelectedTags(
-                tags.map((tag) => {
-                  return { label: tag.label, id: tag.value };
-                })
-              )
-            }
+          <SelectTags
+            selectedTags={selectedTags}
+            setSelectedTags={setSelectedTags}
           />
         </div>
         <button
-          className='saveNote'
+          className='noteButtons'
           type='submit'
           title='Ctrl+Alt+B'
-          ref={saveNote}
+          // ref={saveNote}
           onClick={handleSubmit}
         >
           Save
+        </button>
+        <button className='noteButtons' onClick={handleSubmit}>
+          View
         </button>
       </div>
       <div className='formContainer'>
@@ -78,6 +115,8 @@ export default function Note() {
               placeholder='Title...'
               ref={titleRef}
               required
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
               //Pressing enter would work like tab
               onFocus={(e) => pressEntertoFocusOn(e, bodyRef.current)}
             />
@@ -89,6 +128,8 @@ export default function Note() {
             placeholder='Write your note here...'
             ref={bodyRef}
             required
+            value={body}
+            onChange={(e) => setBody(e.target.value)}
             // cols='15'
             // rows='1'
           ></textarea>
@@ -98,3 +139,19 @@ export default function Note() {
     </div>
   );
 }
+
+//Save the note by pressing Ctrl + ALt + v
+// useEffect(() => {
+//   const saveForm = (e) => {
+//     if (e.ctrlKey && e.altKey && e.key == 'b') {
+//       e.stopPropagation();
+//       console.log(`form saved`);
+//       // saveNote.current.dispatchEvent(new CustomEvent('click'));
+//     }
+//   };
+
+//   const debouncedSaveForm = debounce(saveForm);
+
+//   window.addEventListener('keydown', debouncedSaveForm);
+//   return () => window.removeEventListener('keydown', debouncedSaveForm);
+// }, []);

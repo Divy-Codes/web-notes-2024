@@ -1,50 +1,95 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
 import './app.scss';
 import FilesSidebar from './components/filesMenu/FilesSidebar.jsx';
 import Note from './components/note/Note.jsx';
 import Navbar from './components/navbar/Navbar.jsx';
-import { useEffect } from 'react';
-import useLocalStorage from './components/hooks/useLocalStorage.jsx';
+import { useEffect, useState } from 'react';
+import { useNotes } from './components/contextProvider/NotesProvider.jsx';
 
-function Layout({ children }) {
-  const [notes, setNotes] = useLocalStorage('NOTES', []);
-  const [tags, setTags] = useLocalStorage('TAGS', []);
+function App() {
+  // const [
+  //   {
+  //     notes,
+  //     tags,
+  //     config: { activeNote },
+  //   },
+  //   dispatch,
+  // ] = useNotes();
+
+  //First Setup. Add a new Empty Note
+
+  //Toggle sidebar between files and search screen
+  const [sidebarScreen, setSidebarScreen] = useState('files');
+  const changeSidebar = (value) => {
+    setSidebarScreen(value);
+  };
+
   return (
     <div className='container'>
       <nav className='navBar'>
-        <Navbar />
+        <Navbar changeSidebar={changeSidebar} />
       </nav>
       <div className='notesContainer'>
         <div className='sidebarContainer'>
-          <div className='oneMoreContainer'>
-            <FilesSidebar />
-          </div>
+          <FilesSidebar sidebarScreen={sidebarScreen} />
         </div>
-        <div className='mainContainer'>{children}</div>
+        <div className='mainContainer'>
+          <Note />
+        </div>
       </div>
-      {/* <div className='sidebarContainer'>Headings</div> */}
     </div>
   );
-}
 
-function App() {
-  return (
-    <Routes>
-      <Route
-        path='/'
-        element={
-          <Layout>
-            <Note />
-          </Layout>
-        }
-      />
-      <Route path='/note/:id'></Route>
-      <Route path='*' element={<Navigate to='/' />} />
-    </Routes>
-  );
+  // function Layout({ children }) {
+  //   const [sidebarScreen, setSidebarScreen] = useState('files');
+  //   const changeSidebar = (value) => {
+  //     setSidebarScreen(value);
+  //   };
+
+  //   return (
+  //     <div className='container'>
+  //       <nav className='navBar'>
+  //         <Navbar changeSidebar={changeSidebar} />
+  //       </nav>
+  //       <div className='notesContainer'>
+  //         <div className='sidebarContainer'>
+  //           <FilesSidebar sidebarScreen={sidebarScreen} />
+  //         </div>
+  //         <div className='mainContainer'>{children}</div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
+
+  // return (
+  //   <Routes>
+  //     <Route
+  //       path='/'
+  //       element={
+  //         <Layout>
+  //           <Note note={config.lastOpened} />
+  //         </Layout>
+  //       }
+  //     />
+  //     <Route path='/note/:id'></Route>
+  //     <Route path='*' element={<Navigate to='/' />} />
+  //   </Routes>
+  // );
 }
 
 export default App;
+
+{
+  /*
+
+=================================NOTES=================================================
+1.) 
+- If we store tags:{label,id} within a note and if the user ever changes the label of a tag then we will have to go to every single note and change the tag name/label there.
+- Solution is to store tagIds in notes instead of tags. If user changes the label we only change the label and ids remain intact. Now we render the same tags ids with a few changed tag labels. We will have to match the tagsids with their labels.
+
+2.) 
+
+*/
+}
 
 //Layout
 //Left: File Structure
@@ -69,3 +114,20 @@ export default App;
 //In order to view it all as one section, you can add the content into a div and give a certain section id to it. Try your best.
 
 //Tabs functionality as well
+
+//Note:{title,body,tags}
+//RawNote:{title,body,tagIds}
+
+//VERY IMPORTANT
+
+//IMPORTANT: With ids and separate storage, we can make changes to separate things without messing with everything it is used in. Cause we used ids there
+//When the user changes a tag label,we go to tags:[] and update the label there. When rendering we take the label from this tags array
+
+{
+  /*
+  Data stored:
+  NOTES:[{title,body,tagId},{}...]
+  TAGS:[{tagId,label},{}...]
+  config:{},
+*/
+}

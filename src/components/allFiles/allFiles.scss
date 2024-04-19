@@ -1,0 +1,44 @@
+.allFilesContainer {
+  .headingContainer {
+    // background-color: red;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    button {
+      all: unset;
+      cursor: pointer;
+      border: none;
+      text-align: center;
+      height: 1.5rem;
+      width: 1.5rem;
+      padding: 0.2rem;
+      border-radius: 50%;
+      color: #eee;
+      background-color: #555;
+    }
+  }
+  padding: 0.5rem;
+  .allFilesList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-top: 1rem;
+
+    li {
+      list-style: none;
+      padding: 0.1rem;
+      font-size: 1rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      border-radius: 4px;
+      cursor: pointer;
+      // background-color: #111;
+      color: #fff;
+
+      &:hover {
+        background-color: #333;
+        // opacity: 0.25;
+      }
+    }
+  }
+}

@@ -1,0 +1,74 @@
+.searchContainer {
+  padding: 0.5rem 0.25rem;
+  font-size: 0.9rem;
+  // background-color: red;
+  // background-color: #242424;
+
+  .searchForm {
+    // display: flex;
+    // flex-direction: column;
+    // justify-content: center;
+    // align-items: center;
+    // border: 2px solid #555;
+    padding: none;
+    // width: 90%;
+
+    .searchForContainer {
+      margin-bottom: 1rem;
+
+      .searchFor {
+        width: 100%;
+        border-radius: 4px;
+      }
+    }
+  }
+
+  .searchTitleContainer {
+    .searchNote {
+      width: 100%;
+      background-color: inherit;
+      border: none;
+      color: #eee;
+      border: 2px solid #555;
+      // width: 90%;
+      padding: 0.25rem;
+      font-size: inherit;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  .searchFor {
+    background-color: #242424;
+    border: 2px solid #555;
+    color: #ccc;
+    padding: 0.2rem;
+    font-size: inherit;
+
+    &:focus {
+      outline: none;
+      // background-color: #151515;
+    }
+  }
+
+  .searchButton {
+    padding: 0.25rem 0.5rem;
+    background-color: inherit;
+    font-size: inherit;
+    color: #aaa;
+    border: none;
+    cursor: pointer;
+
+    &:focus {
+      font-weight: 600;
+      outline: none;
+      color: #fff;
+      background-color: #151515;
+    }
+  }
+}
+
+// .reactSelectContainer {
+// }
