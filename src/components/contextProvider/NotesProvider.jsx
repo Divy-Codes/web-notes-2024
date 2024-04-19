@@ -23,6 +23,7 @@ const initialState = {
   tags: getLocalStored('TAGS') || [],
   config: getLocalStored('CONFIG') || {
     activeNote: dummyNote,
+    mode: 'edit',
   },
 };
 
@@ -30,7 +31,10 @@ const initialState = {
   /*
   note:{id,title,body,tagIds}, //Note only contains tagIds. Helps if tags are renamed.
   tag:{tagId,label},
-  config:{activeNote:{id,title,body,tagIds}}
+  config:{
+    activeNote:{id,title,body,tagIds},
+    mode:'view' or 'edit'
+  }
 
   notes:[Array of note],
   tags:Contains all created tags
@@ -43,6 +47,7 @@ export const actions = {
   ADD_NEW_TAGS: 'addNewTag',
   SET_ACTIVE_NOTE: 'setActiveNote',
   ADD_NEW_NOTE: 'addNewNote',
+  TOGGLE_MODE: 'toggleMode',
 };
 
 const reducer = (state, { type, payload }) => {
@@ -92,7 +97,19 @@ const reducer = (state, { type, payload }) => {
       return {
         ...state,
         config: {
+          ...state.config,
           activeNote: payload,
+        },
+      };
+
+    case 'toggleMode':
+      console.log(`toggleMode called`);
+
+      return {
+        ...state,
+        config: {
+          ...state.config,
+          mode: state.config.mode == 'edit' ? 'view' : 'edit',
         },
       };
 

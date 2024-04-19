@@ -1,0 +1,73 @@
+.viewNoteContainer {
+  height: 90vh;
+  overflow-y: auto;
+  white-space: pre-wrap; //Respects all the white spaces given in text-area.
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .primaryTitle {
+    margin-bottom: 2rem;
+  }
+
+  //All the extra styles for markdown
+
+  //Used for codes parent
+  pre {
+    background-color: #242424;
+    padding: 10px;
+  }
+
+  blockquote {
+    // background-color: rgba();
+    background-color: rgba($color: #fff, $alpha: 0.05);
+    border-left: 3px solid green;
+    padding-left: 1rem;
+    border-radius: 4px;
+  }
+
+  code {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+  }
+
+  table {
+    border-collapse: collapse;
+    border: 1px solid #eee;
+    th {
+      background-color: #444;
+      padding: 0.25rem 0.5rem;
+    }
+
+    tr:nth-child(even) {
+      background-color: #333;
+    }
+
+    td {
+      padding: 0.25rem 0.5rem;
+    }
+  }
+
+  ul,
+  ol,
+  li,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    line-height: 1;
+  }
+
+  ul {
+    list-style-type: disc;
+    list-style-position: inside;
+  }
+  ol {
+    list-style-type: decimal;
+    list-style-position: inside;
+  }
+}

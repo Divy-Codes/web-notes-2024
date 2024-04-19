@@ -101,9 +101,9 @@ export default function Note() {
         >
           Save
         </button>
-        <button className='noteButtons' onClick={handleSubmit}>
+        {/* <button className='noteButtons' onClick={handleSubmit}>
           View
-        </button>
+        </button> */}
       </div>
       <div className='formContainer'>
         <form className='noteForm'>
