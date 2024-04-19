@@ -1,22 +1,15 @@
 import './searchFiles.scss';
-import { IoIosSearch } from 'react-icons/io';
 import { useEffect, useState } from 'react';
 import ReactSelect from 'react-select';
 import AllFiles from '../allFiles/AllFiles';
-import {
-  searchWithTags,
-  searchWithTitle,
-  debouncedSearchWithTitle,
-  debouncedSearchWithTags,
-} from '../../utils/helperMethods';
+import { searchWithTags, searchWithTitle } from '../../utils/helperMethods';
 
 import { useNotes } from '../contextProvider/NotesProvider';
 
 export default function SearchFiles() {
-  const [{ notes, tags }, dispatch] = useNotes();
+  const [{ notes, tags }] = useNotes();
   const [searchedString, setSearchedString] = useState('');
   const [searchFor, setSearchFor] = useState('titles');
-  const [allTitles, setAllTitles] = useState();
   const [searchedTags, setSearchedTags] = useState([]);
   const [filteredNotes, setFilteredNotes] = useState([]);
 
@@ -149,8 +142,6 @@ export default function SearchFiles() {
         )}
       </form>
       <ul>
-        {/* {filteredNotes &&
-          filteredNotes.map((note) => <li key={note.id}>{note.title}</li>)} */}
         <AllFiles notes={filteredNotes} searchBar={true} />
       </ul>
     </div>
