@@ -1,11 +1,19 @@
 import { createContext, useContext, useReducer } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-// function getSelectedTagIds(tags,selectedTags){
-//   return selectedTags.map(selectedTag=>{
-//     return tags.filter(tag=>tag.label==selectedTag.id?);
-//   })
-// }
+{
+  /*
+  note:{id,title,body,tagIds}, //Note only contains tagIds. Helps if tags are renamed.
+  tag:{tagId,label},
+  config:{
+    activeNote:{id,title,body,tagIds},
+    mode:'view' or 'edit'
+  }
+
+  notes:[Array of note],
+  tags:Contains all created tags
+*/
+}
 
 const getLocalStored = (key) => {
   return JSON.parse(localStorage.getItem(key));
@@ -21,25 +29,11 @@ const dummyNote = {
 const initialState = {
   notes: getLocalStored('NOTES') || [dummyNote],
   tags: getLocalStored('TAGS') || [],
+  mode: 'edit',
   config: getLocalStored('CONFIG') || {
     activeNote: dummyNote,
-    mode: 'edit',
   },
 };
-
-{
-  /*
-  note:{id,title,body,tagIds}, //Note only contains tagIds. Helps if tags are renamed.
-  tag:{tagId,label},
-  config:{
-    activeNote:{id,title,body,tagIds},
-    mode:'view' or 'edit'
-  }
-
-  notes:[Array of note],
-  tags:Contains all created tags
-*/
-}
 
 export const actions = {
   SAVE_NOTE: 'saveNote',
@@ -48,6 +42,7 @@ export const actions = {
   SET_ACTIVE_NOTE: 'setActiveNote',
   ADD_NEW_NOTE: 'addNewNote',
   TOGGLE_MODE: 'toggleMode',
+  DELETE_NOTE: 'deleteNote',
 };
 
 const reducer = (state, { type, payload }) => {
@@ -58,26 +53,7 @@ const reducer = (state, { type, payload }) => {
         notes: [...state.notes, payload],
       };
 
-    //We will check if it's an old note or new note using payload.id
     case 'saveNote':
-      console.log(`saveNote called`);
-      console.log(`payload:`, payload);
-
-      // payload.id == null
-      // ? {
-      //     ...state,
-      //     notes: [
-      //       ...state.notes,
-      //       {
-      //         id: uuidv4(),
-      //         title: payload.title,
-      //         body: payload.body,
-      //         //Only send the ids to the note stored in main state . Refer to notes in Note.jsx for reason
-      //         tagIds: payload.selectedTags.map((tag) => tag.id),
-      //       },
-      //     ],
-      //   }
-      // : {
       return {
         ...state,
         notes: state.notes.map((note) =>
@@ -92,8 +68,6 @@ const reducer = (state, { type, payload }) => {
       };
 
     case 'setActiveNote':
-      console.log(`payload :`, payload);
-
       return {
         ...state,
         config: {
@@ -108,9 +82,15 @@ const reducer = (state, { type, payload }) => {
       return {
         ...state,
         config: {
-          ...state.config,
-          mode: state.config.mode == 'edit' ? 'view' : 'edit',
+          ...state,
+          mode: state.mode == 'edit' ? 'view' : 'edit',
         },
+      };
+
+    case 'deleteNote':
+      return {
+        ...state,
+        notes: state.notes.filter((note) => note.id != payload.id),
       };
 
     default:
@@ -130,5 +110,3 @@ export default function NotesProvider({ children }) {
     </NotesContext.Provider>
   );
 }
-
-//Whatever is returned by the reducer is in fact setState() into the intial state. This would also re-render all the components. Yes calling dispatch would cause re-renders as it is updating the state.

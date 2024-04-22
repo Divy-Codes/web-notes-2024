@@ -3,14 +3,11 @@ import { IoIosSearch } from 'react-icons/io';
 import { FaFolderOpen } from 'react-icons/fa';
 import { MdEdit, MdRemoveRedEye } from 'react-icons/md';
 import { actions, useNotes } from '../contextProvider/NotesProvider';
+import { useEffect } from 'react';
 
 export default function Navbar({ changeSidebar = (f) => f }) {
-  const [
-    {
-      config: { mode },
-    },
-    dispatch,
-  ] = useNotes();
+  const [{ mode }, dispatch] = useNotes();
+
   return (
     <div className='navBarContainer'>
       <div className='leftOptions'>
@@ -20,17 +17,20 @@ export default function Navbar({ changeSidebar = (f) => f }) {
         <button onClick={() => changeSidebar('search')}>
           <IoIosSearch size={20} />
         </button>
-        <button>Button c</button>
       </div>
       <div className='rightOptions'>
         <button
           className='viewEdit'
           onClick={() => dispatch({ type: actions.TOGGLE_MODE })}
         >
-          {mode == 'view' ? <MdEdit size={20} /> : <MdRemoveRedEye size={20} />}
+          {mode != undefined && mode == 'view' ? (
+            <MdEdit size={20} />
+          ) : (
+            <MdRemoveRedEye size={20} />
+          )}
         </button>
-        <button>Save All</button>
-        <button>Button F</button>
+        {/* <button>Save All</button>
+        <button>Button F</button> */}
       </div>
     </div>
   );

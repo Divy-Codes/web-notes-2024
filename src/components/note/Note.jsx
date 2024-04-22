@@ -79,7 +79,8 @@ export default function Note() {
   }, [tags]);
 
   useEffect(() => {
-    localStorage.setItem('CONFIG', JSON.stringify({ activeNote }));
+    // localStorage.setItem('CONFIG', JSON.stringify({ activeNote }));
+    localStorage.setItem('CONFIG', JSON.stringify({ activeNote })); //New addition
   }, [activeNote, title, body]);
 
   // =============================RETURN========================================

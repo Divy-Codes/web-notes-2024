@@ -3,15 +3,11 @@ import FilesSidebar from './components/filesMenu/FilesSidebar.jsx';
 import Note from './components/note/Note.jsx';
 import Navbar from './components/navbar/Navbar.jsx';
 import ViewNote from './components/viewNote/ViewNote.jsx';
-import { useEffect, useReducer, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNotes } from './components/contextProvider/NotesProvider.jsx';
 
 function App() {
-  const [
-    {
-      config: { mode, activeNote },
-    },
-  ] = useNotes();
+  const [{ mode }] = useNotes();
 
   //Toggle sidebar between files and search screen
   const [sidebarScreen, setSidebarScreen] = useState('files');
