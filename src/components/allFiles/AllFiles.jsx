@@ -1,12 +1,13 @@
+import { useEffect, useState } from 'react';
 import { actions, useNotes } from '../contextProvider/NotesProvider';
 import './allFiles.scss';
 import { FaPlus } from 'react-icons/fa';
+import { MdDelete } from 'react-icons/md';
 import { v4 as uuidv4 } from 'uuid';
 
 export default function AllFiles({ notes = [], searchBar = false }) {
-  console.log(`searchBar:`, searchBar);
-
   const [, dispatch] = useNotes();
+  const [del, setDel] = useState(0);
 
   function makeNewNote() {
     const newNote = {
@@ -22,6 +23,20 @@ export default function AllFiles({ notes = [], searchBar = false }) {
     dispatch({ type: actions.SET_ACTIVE_NOTE, payload: newNote });
   }
 
+  //Delete a Note Setup
+  function deleteNote(id) {
+    setDel((del) => del + 1);
+    if (notes.length == 1) {
+      makeNewNote();
+    }
+    dispatch({ type: actions.DELETE_NOTE, payload: { id } });
+  }
+
+  //We need to use useEffect if we want a realtime update of a site.
+  useEffect(() => {
+    dispatch({ type: actions.SET_ACTIVE_NOTE, payload: notes[0] });
+  }, [del]);
+
   return (
     <div className='allFilesContainer'>
       {!searchBar ? (
@@ -36,15 +51,20 @@ export default function AllFiles({ notes = [], searchBar = false }) {
       )}
       <ul className='allFilesList'>
         {notes.map((note) => (
-          <li
-            key={note.id}
-            className='noteTitle'
-            onClick={() =>
-              dispatch({ type: actions.SET_ACTIVE_NOTE, payload: note })
-            }
-          >
-            {note.title}
-          </li>
+          <div className='noteFileContainer' key={note.id}>
+            <li
+              key={note.id}
+              className='noteTitle'
+              onClick={() =>
+                dispatch({ type: actions.SET_ACTIVE_NOTE, payload: note })
+              }
+            >
+              {note.title}
+            </li>
+            <span className='deleteIcon' onClick={() => deleteNote(note.id)}>
+              <MdDelete size={17} />
+            </span>
+          </div>
         ))}
       </ul>
     </div>

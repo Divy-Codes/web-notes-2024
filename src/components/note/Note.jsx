@@ -79,7 +79,8 @@ export default function Note() {
   }, [tags]);
 
   useEffect(() => {
-    localStorage.setItem('CONFIG', JSON.stringify({ activeNote }));
+    // localStorage.setItem('CONFIG', JSON.stringify({ activeNote }));
+    localStorage.setItem('CONFIG', JSON.stringify({ activeNote })); //New addition
   }, [activeNote, title, body]);
 
   // =============================RETURN========================================
@@ -101,9 +102,9 @@ export default function Note() {
         >
           Save
         </button>
-        <button className='noteButtons' onClick={handleSubmit}>
+        {/* <button className='noteButtons' onClick={handleSubmit}>
           View
-        </button>
+        </button> */}
       </div>
       <div className='formContainer'>
         <form className='noteForm'>

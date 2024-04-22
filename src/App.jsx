@@ -2,20 +2,12 @@ import './app.scss';
 import FilesSidebar from './components/filesMenu/FilesSidebar.jsx';
 import Note from './components/note/Note.jsx';
 import Navbar from './components/navbar/Navbar.jsx';
-import { useEffect, useState } from 'react';
+import ViewNote from './components/viewNote/ViewNote.jsx';
+import { useState, useEffect } from 'react';
 import { useNotes } from './components/contextProvider/NotesProvider.jsx';
 
 function App() {
-  // const [
-  //   {
-  //     notes,
-  //     tags,
-  //     config: { activeNote },
-  //   },
-  //   dispatch,
-  // ] = useNotes();
-
-  //First Setup. Add a new Empty Note
+  const [{ mode }] = useNotes();
 
   //Toggle sidebar between files and search screen
   const [sidebarScreen, setSidebarScreen] = useState('files');
@@ -33,7 +25,7 @@ function App() {
           <FilesSidebar sidebarScreen={sidebarScreen} />
         </div>
         <div className='mainContainer'>
-          <Note />
+          {mode == 'edit' ? <Note /> : <ViewNote />}
         </div>
       </div>
     </div>

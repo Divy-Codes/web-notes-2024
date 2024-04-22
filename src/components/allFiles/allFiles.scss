@@ -24,20 +24,52 @@
     gap: 0.25rem;
     margin-top: 1rem;
 
-    li {
-      list-style: none;
-      padding: 0.1rem;
-      font-size: 1rem;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      border-radius: 4px;
-      cursor: pointer;
-      // background-color: #111;
-      color: #fff;
+    .noteFileContainer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
 
+      li {
+        list-style: none;
+        padding: 0.1rem;
+        font-size: 1rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        border-radius: 4px;
+        width: inherit;
+        cursor: pointer;
+        flex-grow: 1;
+        // background-color: #111;
+        color: #fff;
+        // background-color: green;
+
+        &:hover {
+          // background-color: #333;
+          // opacity: 0.25;
+        }
+      }
+
+      .deleteIcon {
+        padding: 0.2rem 0.5rem;
+        cursor: pointer;
+        visibility: hidden;
+        pointer-events: none;
+
+        &:hover {
+          background-color: #555;
+        }
+      }
+
+      //For main container
       &:hover {
         background-color: #333;
-        // opacity: 0.25;
+      }
+
+      //Delete button visible  when hovered on note
+      &:hover .deleteIcon {
+        visibility: visible;
+        pointer-events: all;
       }
     }
   }
