@@ -3,7 +3,6 @@ import { IoIosSearch } from 'react-icons/io';
 import { FaFolderOpen } from 'react-icons/fa';
 import { MdEdit, MdRemoveRedEye } from 'react-icons/md';
 import { actions, useNotes } from '../contextProvider/NotesProvider';
-import { useEffect } from 'react';
 
 export default function Navbar({ changeSidebar = (f) => f }) {
   const [{ mode }, dispatch] = useNotes();
@@ -21,6 +20,7 @@ export default function Navbar({ changeSidebar = (f) => f }) {
       <div className='rightOptions'>
         <button
           className='viewEdit'
+          title={mode == 'edit' ? 'view mode' : 'edit mode'}
           onClick={() => dispatch({ type: actions.TOGGLE_MODE })}
         >
           {mode != undefined && mode == 'view' ? (

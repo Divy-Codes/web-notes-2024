@@ -81,10 +81,7 @@ const reducer = (state, { type, payload }) => {
 
       return {
         ...state,
-        config: {
-          ...state,
-          mode: state.mode == 'edit' ? 'view' : 'edit',
-        },
+        mode: state.mode == 'edit' ? 'view' : 'edit',
       };
 
     case 'deleteNote':
