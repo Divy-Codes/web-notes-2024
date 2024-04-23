@@ -15,10 +15,10 @@ export default function Note() {
     },
     dispatch,
   ] = useNotes();
-  const [title, setTitle] = useState(activeNote.title || 'Untitled');
-  const [body, setBody] = useState(activeNote.body || '');
+  const [title, setTitle] = useState(activeNote?.title || 'Untitled');
+  const [body, setBody] = useState(activeNote?.body || '');
   const [selectedTags, setSelectedTags] = useState([]);
-  const [noteId, setNoteId] = useState(activeNote.id || null);
+  const [noteId, setNoteId] = useState(activeNote?.id || null);
   const titleRef = useRef();
   const bodyRef = useRef();
 
@@ -29,7 +29,7 @@ export default function Note() {
       setBody(activeNote.body);
       setNoteId(activeNote.id);
 
-      //Update selectedTags from active note as well. Remember Note and activeNote have tagIds instead of tags. So need to convert them
+      //Note and activeNote have tagIds instead of tags. So map out tags
       setSelectedTags(
         activeNote.tagIds.map((tagId) => tags.find((tag) => tag.id == tagId))
       );
