@@ -3,15 +3,13 @@ import { v4 as uuidv4 } from 'uuid';
 
 {
   /*
-  note:{id,title,body,tagIds}, //Note only contains tagIds. Helps if tags are renamed.
-  tag:{tagId,label},
+  note:{id,title,body}, 
   config:{
-    activeNote:{id,title,body,tagIds},
+    activeNote:{id,title,body},
     mode:'view' or 'edit'
   }
 
   notes:[Array of note],
-  tags:Contains all created tags
 */
 }
 
@@ -23,12 +21,10 @@ const dummyNote = {
   id: uuidv4(),
   title: 'Untitled',
   body: '',
-  // tagIds: [],
 };
 
 const initialState = {
   notes: getLocalStored('NOTES') || [dummyNote],
-  // tags: getLocalStored('TAGS') || [],
   mode: 'edit',
   config: getLocalStored('CONFIG') || {
     activeNote: dummyNote,
@@ -37,13 +33,10 @@ const initialState = {
 
 export const actions = {
   SAVE_NOTE: 'saveNote',
-  // CHANGE_TAGS: 'changeTags',
-  // ADD_NEW_TAGS: 'addNewTag',
   SET_ACTIVE_NOTE: 'setActiveNote',
   ADD_NEW_NOTE: 'addNewNote',
   TOGGLE_MODE: 'toggleMode',
   DELETE_NOTE: 'deleteNote',
-  // SAVE_SELECTED_TAGS: 'saveSelectedTags',
 };
 
 const reducer = (state, { type, payload }) => {
@@ -61,24 +54,6 @@ const reducer = (state, { type, payload }) => {
           note.id == payload.id ? payload : note
         ),
       };
-
-    //New addition
-    // case 'saveSelectedTags':
-    //   console.log(`payload:`, payload);
-    //   console.log(payload.tagIds);
-
-    //   return {
-    //     ...state,
-    //     notes: state.notes.map((note) =>
-    //       note.id == payload.id ? { ...note, tagIds: payload.tagIds } : note
-    //     ),
-    //   };
-
-    // case 'addNewTag':
-    //   return {
-    //     ...state,
-    //     tags: [...state.tags, payload.newTag],
-    //   };
 
     case 'setActiveNote':
       return {

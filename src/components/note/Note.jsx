@@ -3,7 +3,6 @@ import './note.scss';
 import { pressEntertoFocusOn } from '../../utils/helperMethods';
 import { actions } from '../contextProvider/NotesProvider';
 import { useNotes } from '../contextProvider/NotesProvider';
-import SelectTags from '../selectTags/SelectTags';
 
 export default function Note() {
   const [
@@ -16,7 +15,6 @@ export default function Note() {
   ] = useNotes();
   const [title, setTitle] = useState(activeNote?.title || 'Untitled');
   const [body, setBody] = useState(activeNote?.body || '');
-  // const [selectedTags, setSelectedTags] = useState([]);
   const [noteId, setNoteId] = useState(activeNote?.id || null);
   const titleRef = useRef();
   const bodyRef = useRef();
@@ -32,16 +30,11 @@ export default function Note() {
       setTitle(activeNote.title);
       setBody(activeNote.body);
       setNoteId(activeNote.id);
-      //Note and activeNote have tagIds instead of tags. So map out tags from selected tagIds of the note
-      // setSelectedTags(
-      //   activeNote.tagIds.map((tagId) => tags.find((tag) => tag.id == tagId))
-      // );
     }
   }, [activeNote, tags]);
 
   //tag = {label:'...' , id: '...'}
   //react-select tag: {label:'...' , value: '...' }
-  // const debouncedSaveNote = debounce(saveNote, 1000);
 
   const saveNote = useCallback(() => {
     if (title.trim().length > 0) {
@@ -49,7 +42,6 @@ export default function Note() {
         id: noteId,
         title,
         body,
-        // tagIds: selectedTags.map((tag) => tag.id),
       };
 
       dispatch({
@@ -62,19 +54,16 @@ export default function Note() {
         payload: savedNote,
       });
     }
-    // }, [body, dispatch, noteId, selectedTags, title]);
   }, [body, dispatch, noteId, title]);
 
   //Save title
   const saveTitle = (e) => {
     setTitle(e.target.value);
-    // saveNote();
   };
 
   //Save Body
   const saveBody = (e) => {
     setBody(e.target.value);
-    // saveNote();
   };
 
   //Auto Save with debouncing
@@ -85,44 +74,6 @@ export default function Note() {
 
     return () => clearTimeout(timeoutID);
   }, [title, body]);
-
-  // useEffect(() => {
-  //   console.log(`selected tags changed`);
-
-  //   const savedNote = {
-  //     id: noteId,
-  //     title,
-  //     body,
-  //     tagIds: selectedTags.map((tag) => tag.id),
-  //   };
-
-  //   dispatch({
-  //     type: actions.SAVE_SELECTED_TAGS,
-  //     payload: savedNote,
-  //   });
-  // }, [dispatch, selectedTags]);
-
-  // function saveNote() {
-  //   //If title is not empty space(s)
-  //   if (title.trim().length > 0) {
-  //     const savedNote = {
-  //       id: noteId,
-  //       title,
-  //       body,
-  //       tagIds: selectedTags.map((tag) => tag.id),
-  //     };
-
-  //     dispatch({
-  //       type: actions.SAVE_NOTE,
-  //       payload: savedNote,
-  //     });
-
-  //     dispatch({
-  //       type: actions.SET_ACTIVE_NOTE,
-  //       payload: savedNote,
-  //     });
-  //   }
-  // }
 
   //Save an already existing Note. Also update the activeNote everytime
   // const handleSubmit = (e) => {
@@ -153,11 +104,6 @@ export default function Note() {
     localStorage.setItem('NOTES', JSON.stringify(notes));
   }, [notes]);
 
-  //When tags update, we want to save them to localStorage as well.
-  // useEffect(() => {
-  //   localStorage.setItem('TAGS', JSON.stringify(tags));
-  // }, [tags]);
-
   useEffect(() => {
     // localStorage.setItem('CONFIG', JSON.stringify({ activeNote }));
     localStorage.setItem('CONFIG', JSON.stringify({ activeNote })); //New addition
@@ -166,26 +112,6 @@ export default function Note() {
   // =============================RETURN========================================
   return (
     <div className='noteContainer'>
-      <div className='noteOptions'>
-        <div className='tags'>
-          {/* <SelectTags
-            selectedTags={selectedTags}
-            setSelectedTags={setSelectedTags}
-          /> */}
-        </div>
-        {/* <button
-          className='noteButtons'
-          // type='submit'
-          title='Ctrl+Alt+B'
-          // ref={saveNote}
-          // onClick={handleSubmit}
-        >
-          Save
-        </button> */}
-        {/* <button className='noteButtons' onClick={handleSubmit}>
-          View
-        </button> */}
-      </div>
       <div className='formContainer'>
         <form className='noteForm'>
           <div className='noteTitleContainer'>
@@ -202,7 +128,6 @@ export default function Note() {
               onFocus={(e) => pressEntertoFocusOn(e, bodyRef.current)}
             />
           </div>
-          {/* <div className='noteBodyContainer'> */}
           <textarea
             name='noteBody'
             id='noteBody'
@@ -214,7 +139,6 @@ export default function Note() {
             // cols='15'
             // rows='1'
           ></textarea>
-          {/* </div> */}
         </form>
       </div>
     </div>
