@@ -22,11 +22,9 @@ export const pressEntertoFocusOn = (e, element) => {
 
 //Searching Notes with title
 export const searchWithTitle = (notes, title) => {
-  console.log(`searchwithtitle triggered`);
   const filteredNotes = notes.filter((note) => {
     return note.title.toLowerCase().includes(title.toLowerCase());
   });
-  console.log(`filteredNotes:`, filteredNotes);
 
   return filteredNotes;
 };
