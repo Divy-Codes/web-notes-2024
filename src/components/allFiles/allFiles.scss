@@ -29,6 +29,8 @@
       justify-content: space-between;
       align-items: center;
       gap: 0.5rem;
+      border-radius: 4px;
+      padding-left: 0.25rem;
 
       li {
         list-style: none;
@@ -55,6 +57,7 @@
         cursor: pointer;
         visibility: hidden;
         pointer-events: none;
+        border-radius: 4px;
 
         &:hover {
           background-color: #555;
