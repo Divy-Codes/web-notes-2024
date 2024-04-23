@@ -43,3 +43,5 @@ export default function SelectTags({
     </div>
   );
 }
+
+//New tag is created. It sets the selected tags as well and adds it to total tags list as well. But i think then onChange event is being called and that does not contain this newly added tag in
