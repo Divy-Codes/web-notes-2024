@@ -65,8 +65,6 @@ const reducer = (state, { type, payload }) => {
       };
 
     case 'toggleMode':
-      console.log(`toggleMode called`);
-
       return {
         ...state,
         mode: state.mode == 'edit' ? 'view' : 'edit',

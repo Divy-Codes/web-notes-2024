@@ -29,20 +29,7 @@ export default function Navbar({ changeSidebar = (f) => f }) {
             <MdRemoveRedEye size={20} />
           )}
         </button>
-        {/* <button>Save All</button>
-        <button>Button F</button> */}
       </div>
     </div>
   );
-}
-
-//Previous
-{
-  /* <button
-className='viewEdit'
-onClick={() => dispatch({ type: actions.TOGGLE_MODE })}
->
-{mode == 'view' ? <MdEdit size={20} /> : <MdRemoveRedEye size={20} />}
-</button>
-<button>Save All</button> */
 }

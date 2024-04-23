@@ -19,11 +19,6 @@ export default function Note() {
   const titleRef = useRef();
   const bodyRef = useRef();
 
-  //Focus on title on every new activeNote by default.
-  useEffect(() => {
-    titleRef.current.focus();
-  }, [activeNote]);
-
   //Update the contents to be rendered when activeNote changes.
   useEffect(() => {
     if (activeNote) {
@@ -74,28 +69,6 @@ export default function Note() {
 
     return () => clearTimeout(timeoutID);
   }, [title, body]);
-
-  //Save an already existing Note. Also update the activeNote everytime
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   console.log(`savenote called`);
-  //   const savedNote = {
-  //     id: noteId,
-  //     title,
-  //     body,
-  //     tagIds: selectedTags.map((tag) => tag.id),
-  //   };
-  //   dispatch({
-  //     type: actions.SAVE_NOTE,
-  //     payload: savedNote,
-  //   });
-
-  //   // Update activeState with same note
-  //   dispatch({
-  //     type: actions.SET_ACTIVE_NOTE,
-  //     payload: savedNote,
-  //   });
-  // };
 
   //=========================SAVING ITEMS TO LOCAL STORAGE=========================
 

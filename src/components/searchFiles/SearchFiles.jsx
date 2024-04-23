@@ -19,9 +19,7 @@ export default function SearchFiles() {
     return () => clearTimeout(timeoutId);
   }, [notes, searchedString]);
 
-  useEffect(() => {
-    console.log(`filteredNotes:`, filteredNotes);
-  }, [filteredNotes]);
+  useEffect(() => {}, [filteredNotes]);
 
   const searchNotes = (e) => {
     e.preventDefault();
