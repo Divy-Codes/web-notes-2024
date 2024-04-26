@@ -27,22 +27,42 @@
       position: relative;
       animation-name: crawl;
       animation-duration: 2s;
+      animation-delay: 1s;
+      animation-fill-mode: forwards;
+      height: 0;
+      width: 0;
+      opacity: 0;
     }
 
     @keyframes crawl {
       0% {
-        // left: 200px;
-        // transform: rotateZ(360deg);
+        height: 0;
+        width: 0;
+        opacity: 1;
         left: -150px;
         transform: rotateZ(0deg);
       }
+      // Get Height and width in 20% of animation. This will also space-out the rest of the text simultaneously
+      20% {
+        height: 2rem;
+        width: 2rem;
+        opacity: 1;
+        left: -150px;
+        transform: rotateZ(72deg);
+      }
 
       85% {
+        opacity: 1;
+        height: 2rem;
+        width: 2rem;
         left: 10px;
         transform: rotateZ(390deg);
       }
       100% {
         left: 0;
+        opacity: 1;
+        height: 2rem;
+        width: 2rem;
         transform: rotateZ(360deg);
       }
     }

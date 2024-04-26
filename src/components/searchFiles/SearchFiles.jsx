@@ -34,6 +34,7 @@ export default function SearchFiles() {
             type='text'
             name='searchNote'
             id='searchNote'
+            autoFocus
             value={searchedString}
             onChange={(e) => setSearchedString(e.target.value)}
             placeholder='Search titles ...'

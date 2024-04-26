@@ -16,8 +16,8 @@ export default function Note() {
   const [title, setTitle] = useState(activeNote?.title || 'Untitled');
   const [body, setBody] = useState(activeNote?.body || '');
   const [noteId, setNoteId] = useState(activeNote?.id || null);
-  const titleRef = useRef();
   const bodyRef = useRef();
+  // const titleRef = useRef();
 
   //Update the contents to be rendered when activeNote changes.
   useEffect(() => {
@@ -93,7 +93,8 @@ export default function Note() {
               name='noteTitle'
               id='noteTitle'
               placeholder='Title...'
-              ref={titleRef}
+              // ref={titleRef}
+              autoFocus
               required
               value={title}
               onChange={saveTitle}
