@@ -10,6 +10,43 @@
     display: flex;
     gap: 0.25rem;
   }
+
+  .appTitle {
+    letter-spacing: 1.5px;
+    .initials {
+      font-size: 1.2rem;
+      background-color: #242424;
+      display: inline-block;
+      height: 2rem;
+      width: 2rem;
+      text-align: center;
+      border-radius: 4px;
+      // padding: 0.01rem 0.35rem;
+      background-color: green;
+      background-color: #627254;
+      position: relative;
+      animation-name: crawl;
+      animation-duration: 2s;
+    }
+
+    @keyframes crawl {
+      0% {
+        // left: 200px;
+        // transform: rotateZ(360deg);
+        left: -150px;
+        transform: rotateZ(0deg);
+      }
+
+      85% {
+        left: 10px;
+        transform: rotateZ(390deg);
+      }
+      100% {
+        left: 0;
+        transform: rotateZ(360deg);
+      }
+    }
+  }
 }
 
 .navBarContainer button {
