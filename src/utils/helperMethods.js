@@ -4,21 +4,9 @@ export function debounce(func, delay = 500) {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => {
       func.apply(this, args);
-      // func.apply(args);
     }, delay);
   };
 }
-
-//Pressing enter on title would tab to body instead of submitting the form
-export const pressEntertoFocusOn = (e, element) => {
-  e.target.addEventListener('keypress', (e) => {
-    if (e.key == 'Enter') {
-      e.preventDefault();
-      element.focus();
-      // bodyRef.current.focus();
-    }
-  });
-};
 
 //Searching Notes with title
 export const searchWithTitle = (notes, title) => {

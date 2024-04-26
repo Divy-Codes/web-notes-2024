@@ -1,17 +1,9 @@
 .searchContainer {
   padding: 0.5rem 0.25rem;
   font-size: 0.9rem;
-  // background-color: red;
-  // background-color: #242424;
 
   .searchForm {
-    // display: flex;
-    // flex-direction: column;
-    // justify-content: center;
-    // align-items: center;
-    // border: 2px solid #555;
     padding: none;
-    // width: 90%;
 
     .searchForContainer {
       margin-bottom: 1rem;
@@ -49,7 +41,6 @@
 
     &:focus {
       outline: none;
-      // background-color: #151515;
     }
   }
 
@@ -69,6 +60,3 @@
     }
   }
 }
-
-// .reactSelectContainer {
-// }
