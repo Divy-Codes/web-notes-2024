@@ -1,4 +1,4 @@
-# Youtube-Frontend Project
+# Web-Notes
 
 ## Introduction
 A CRUD(create, read, update and delete) Notes application that supports markdown content. The notes created are saved in the local storage of your browser. This is supposed to be a portfolio project for now.
@@ -8,7 +8,7 @@ Checkout the deployed app here :- https://web-notes-2024.web.app/
 Implemented the following in this project:-
 - Markdown support.
 - Context API with reducer for state management.
-- Auto-save feature with debouncing and a keyboard shortcut to view markdown for ease of use.
+- Auto-save functionality (used debouncing) and a keyboard shortcut to view markdown for ease of use.
 - Debounced searching the notes using titles. 
 - Deployed using firebase.
 
